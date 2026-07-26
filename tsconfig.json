@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "ES2025",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "lib": ["ES2025"],
+        "types": ["node"],
+
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "noImplicitOverride": true,
+        "noFallthroughCasesInSwitch": true,
+        "verbatimModuleSyntax": true,
+        "isolatedModules": true,
+
+        "moduleDetection": "force",
+        "skipLibCheck": true,
+        "noEmit": true
+    },
+    "include": ["src", "tests"]
+}

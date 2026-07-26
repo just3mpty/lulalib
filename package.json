@@ -1,0 +1,32 @@
+{
+    "name": "uzume",
+    "version": "0.0.0",
+    "description": "A declarative music composition DSL for JavaScript/TypeScript. Compiles to a serializable Score, no audio engine.",
+    "type": "module",
+    "license": "MIT",
+    "author": "3mpty",
+    "keywords": [
+        "music",
+        "dsl",
+        "composition",
+        "pattern",
+        "score"
+    ],
+    "scripts": {
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "coverage": "vitest run --coverage",
+        "typecheck": "tsc --noEmit",
+        "lint": "biome check .",
+        "format": "biome format --write ."
+    },
+    "packageManager": "pnpm@10.30.3",
+    "devDependencies": {
+        "@biomejs/biome": "^2.5.5",
+        "@types/node": "^26.1.1",
+        "@vitest/coverage-v8": "^4.1.10",
+        "tsup": "^8.5.1",
+        "typescript": "^7.0.2",
+        "vitest": "^4.1.10"
+    }
+}
