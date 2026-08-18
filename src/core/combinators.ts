@@ -1,6 +1,17 @@
-import { compare, div, type Fraction, frac, lte, max, mul, toFraction } from "../time/fraction";
-import { contains, span } from "../time/timespan";
-import { event, scaleEvent } from "./event";
+import {
+    add,
+    compare,
+    div,
+    type Fraction,
+    frac,
+    lte,
+    max,
+    mul,
+    sub,
+    toFraction,
+} from "../time/fraction";
+import { contains, shift, span } from "../time/timespan";
+import { type Event, event, scaleEvent, shiftEvent } from "./event";
 import type { Pattern } from "./pattern";
 
 export function pure<T>(value: T, dur: Fraction = frac(1)): Pattern<T> {
@@ -43,4 +54,25 @@ export function fast<T>(factor: number | Fraction, p: Pattern<T>): Pattern<T> {
 export function slow<T>(factor: number | Fraction, p: Pattern<T>): Pattern<T> {
     const f = toFraction(factor);
     return fast(div(frac(1), f), p);
+}
+
+export function cat<T>(...patterns: Pattern<T>[]): Pattern<T> {
+    const length = patterns.reduce((acc, p) => add(acc, p.length), frac(0));
+
+    return {
+        length,
+        query: (s) => {
+            const out: Event<T>[] = [];
+            let offset = frac(0);
+            for (const p of patterns) {
+                const localSpan = shift(s, sub(frac(0), offset));
+                const localEvents = p.query(localSpan);
+                for (const e of localEvents) {
+                    out.push(shiftEvent(e, offset));
+                }
+                offset = add(offset, p.length);
+            }
+            return out.sort((a, b) => compare(a.start, b.start));
+        },
+    };
 }

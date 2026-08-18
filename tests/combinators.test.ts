@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { fast, pure, slow, stack } from "../src/core/combinators";
+import { cat, fast, pure, slow, stack } from "../src/core/combinators";
 import { event } from "../src/core/event";
 import { frac } from "../src/time/fraction";
 import { span } from "../src/time/timespan";
@@ -105,5 +105,36 @@ describe("Phase 0 — démonstration bout-en-bout", () => {
             event(frac(0), frac(1), "a"),
             event(frac(0), frac(1, 2), "b"),
         ]);
+    });
+});
+
+describe("cat", () => {
+    it("place les patterns bout à bout", () => {
+        const p = cat(pure("a", frac(1)), pure("b", frac(1)));
+        expect(p.length).toEqual(frac(2));
+        expect(p.query(span(frac(0), p.length))).toEqual([
+            event(frac(0), frac(1), "a"),
+            event(frac(1), frac(1), "b"),
+        ]);
+    });
+
+    it("gère des longueurs différentes", () => {
+        const p = cat(pure("a", frac(2)), pure("b", frac(1)));
+        expect(p.length).toEqual(frac(3));
+        expect(p.query(span(frac(0), p.length))).toEqual([
+            event(frac(0), frac(2), "a"),
+            event(frac(2), frac(1), "b"),
+        ]);
+    });
+
+    it("ne renvoie que les events de la fenêtre (C1)", () => {
+        const p = cat(pure("a", frac(1)), pure("b", frac(1)));
+        expect(p.query(span(frac(1), frac(2)))).toEqual([event(frac(1), frac(1), "b")]);
+    });
+
+    it("cat() vide → pattern vide", () => {
+        const p = cat<string>();
+        expect(p.length).toEqual(frac(0));
+        expect(p.query(span(frac(0), frac(1)))).toEqual([]);
     });
 });
