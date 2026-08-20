@@ -51,9 +51,9 @@ type Pending = { startStep: number; steps: number; pitches: string[] };
 export function resolve(
     melody: MelodyAst,
     rhythm: RhythmAst,
-    opts: { instrument: string; step: Fraction },
+    opts: { instrument: string; step: Fraction; part?: string },
 ): Pattern<EventValue> {
-    const { instrument, step } = opts;
+    const { instrument, step, part } = opts;
     const pool = flattenMelody(melody);
     const grid = flattenRhythm(rhythm);
 
@@ -67,11 +67,12 @@ export function resolve(
         }
         const start = mul(step, frac(current.startStep));
         const dur = mul(step, frac(current.steps));
+        const base: EventValue = part === undefined ? { instrument } : { instrument, part };
         if (current.pitches.length === 0) {
-            events.push(event(start, dur, { instrument }));
+            events.push(event(start, dur, base));
         } else {
             for (const pitch of current.pitches) {
-                events.push(event(start, dur, { instrument, note: pitch }));
+                events.push(event(start, dur, { ...base, note: pitch }));
             }
         }
     };
