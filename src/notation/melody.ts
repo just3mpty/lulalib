@@ -47,7 +47,7 @@ function readNote(src: string, from: number): { pitch: string; next: number } {
 
 function readRepeat(src: string, from: number): { repeat: number; next: number } {
     if (src[from] !== "*") {
-        return { repeat: 1, next: from }; // pas de "*" → répétition = 1, on ne bouge pas
+        return { repeat: 1, next: from };
     }
     let cursor = from + 1;
     let digits = "";

@@ -113,7 +113,7 @@ describe("parseRhythm — groupes", () => {
     });
 
     it("rejette *0 (entier ≤ 0)", () => {
-        expect(() => parseRhythm("[x-]*2*0".slice(0, 5) + "0")).toThrow(ParseError); // "[x-]*0"
+        expect(() => parseRhythm("[x-]*2*0".slice(0, 5) + "0")).toThrow(ParseError);
     });
     describe("parseRhythm — erreurs de crochets", () => {
         it("rejette un crochet non fermé", () => {

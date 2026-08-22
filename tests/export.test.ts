@@ -12,6 +12,6 @@ describe("toJSON", () => {
 
     it("indente avec l'option pretty", () => {
         expect(toJSON(score, { pretty: true })).toContain("\n");
-        expect(toJSON(score)).not.toContain("\n"); // compact par défaut
+        expect(toJSON(score)).not.toContain("\n");
     });
 });

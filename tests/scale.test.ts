@@ -19,8 +19,8 @@ describe("degreeToNote", () => {
     });
     it("applique l'altération d'un token degré", () => {
         const C = parseKey("C");
-        expect(degreeToNote(C, 3, 4, -1)).toBe("Eb4"); // 3b en C
-        expect(degreeToNote(C, 4, 4, +1)).toBe("F#4"); // 4# en C
+        expect(degreeToNote(C, 3, 4, -1)).toBe("Eb4");
+        expect(degreeToNote(C, 4, 4, +1)).toBe("F#4");
     });
 });
 

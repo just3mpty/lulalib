@@ -35,16 +35,16 @@ describe("song / arrange", () => {
     it("arrange est immuable : l'original n'est pas modifié", () => {
         const base = song({ bpm: 128 });
         base.arrange([verse]);
-        expect(base.arrangement).toHaveLength(0); // base intact
+        expect(base.arrangement).toHaveLength(0);
     });
 
     it("export enchaîne les sections dans le temps", () => {
-        const a = section([track("acid", { notes: "C4", rhythm: "x" })]); // length 1/4
-        const b = section([track("909", { rhythm: "x" })]); // length 1/4
+        const a = section([track("acid", { notes: "C4", rhythm: "x" })]);
+        const b = section([track("909", { rhythm: "x" })]);
 
         const score = song({ bpm: 120 }).arrange([a, b]).export();
 
-        expect(score.duration).toBe("1/2"); // 1/4 + 1/4 → SÉQUENTIEL (pas simultané !)
+        expect(score.duration).toBe("1/2");
         expect(score.events).toEqual([
             { start: "0/1", dur: "1/4", instrument: "acid", note: "C4" },
             { start: "1/4", dur: "1/4", instrument: "909" },
@@ -53,14 +53,14 @@ describe("song / arrange", () => {
     });
 
     it(".repeat(n) répète une section dans le temps", () => {
-        const a = section([track("x", { rhythm: "x" })]); // length 1/4
-        const b = section([track("y", { rhythm: "x" })]); // length 1/4
+        const a = section([track("x", { rhythm: "x" })]);
+        const b = section([track("y", { rhythm: "x" })]);
 
         const score = song({ bpm: 120 })
             .arrange([a, b.repeat(2)])
             .export();
 
-        expect(score.duration).toBe("3/4"); // a + b + b
+        expect(score.duration).toBe("3/4");
         expect(score.events.map((e) => e.instrument)).toEqual(["x", "y", "y"]);
     });
 });
