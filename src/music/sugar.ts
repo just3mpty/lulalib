@@ -1,19 +1,17 @@
 import { stack } from "../core/combinators";
 import { type Key, parseKey, resolveDegrees } from "../theory/scale";
-import type { Fraction } from "../time/fraction";
+import { type Fraction, parseFraction } from "../time/fraction";
 import type { BuildContext } from "./section";
 import { type Track, track } from "./track";
 import type { EventValue } from "./value";
 
 const DEFAULT_KEY: Key = parseKey("C");
 
-// --- sucre mélodique : bass() / lead() / inst() ---
-
 export type MelodicBuilder = {
     readonly length: Fraction;
     notes(pitches: string): MelodicBuilder;
     rhythm(pattern: string): MelodicBuilder;
-    step(value: Fraction): MelodicBuilder;
+    step(value: string): MelodicBuilder;
     octave(n: number): MelodicBuilder;
     build(ctx?: BuildContext): Track;
 };
@@ -44,7 +42,7 @@ function melodic(spec: MelodicSpec): MelodicBuilder {
         length: buildMelodicTrack(spec, { key: DEFAULT_KEY }).pattern.length,
         notes: (pitches) => melodic({ ...spec, notes: pitches }),
         rhythm: (pattern) => melodic({ ...spec, rhythm: pattern }),
-        step: (value) => melodic({ ...spec, step: value }),
+        step: (value) => melodic({ ...spec, step: parseFraction(value) }),
         octave: (n) => melodic({ ...spec, baseOctave: n }),
         build: (ctx) => buildMelodicTrack(spec, ctx),
     };
@@ -62,15 +60,13 @@ export function inst(instrument: string): MelodicBuilder {
     return melodic({ instrument });
 }
 
-// --- sucre percussions : drums() ---
-
 export type DrumsBuilder = {
     readonly length: Fraction;
     kick(rhythm: string): DrumsBuilder;
     snare(rhythm: string): DrumsBuilder;
     hihat(rhythm: string): DrumsBuilder;
     part(name: string, rhythm: string): DrumsBuilder;
-    step(value: Fraction): DrumsBuilder;
+    step(value: string): DrumsBuilder;
     build(ctx?: BuildContext): Track;
 };
 
@@ -100,7 +96,7 @@ function drumsBuilder(spec: DrumSpec): DrumsBuilder {
         snare: (rhythm) => addPart("snare", rhythm),
         hihat: (rhythm) => addPart("hihat", rhythm),
         part: (name, rhythm) => addPart(name, rhythm),
-        step: (value) => drumsBuilder({ ...spec, step: value }),
+        step: (value) => drumsBuilder({ ...spec, step: parseFraction(value) }),
         build: () => buildDrumsTrack(spec),
     };
 }

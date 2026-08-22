@@ -14,6 +14,7 @@ import {
     max,
     min,
     mul,
+    parseFraction,
     sub,
     toNumber,
 } from "../src/time/fraction";
@@ -127,7 +128,17 @@ describe("gte", () => {
 describe("min", () => {
     it("retourne la plus petite fraction", () => {
         expect(min(frac(1, 2), frac(3, 4))).toEqual(frac(1, 2));
+        expect(min(frac(3, 4), frac(1, 2))).toEqual(frac(1, 2));
         expect(max(frac(1, 2), frac(3, 4))).toEqual(frac(3, 4));
+        expect(max(frac(3, 4), frac(1, 2))).toEqual(frac(3, 4));
+    });
+});
+
+describe("parseFraction", () => {
+    it("parse une fraction depuis une chaîne", () => {
+        expect(parseFraction("1/8")).toEqual(frac(1, 8));
+        expect(parseFraction("3/2")).toEqual(frac(3, 2));
+        expect(parseFraction("2")).toEqual(frac(2, 1));
     });
 });
 

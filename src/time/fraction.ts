@@ -97,3 +97,10 @@ export function toFraction(value: number | Fraction): Fraction {
     }
     return value;
 }
+
+export function parseFraction(value: string): Fraction {
+    const parts = value.split("/");
+    const num = Number(parts[0]);
+    const den = parts.length > 1 ? Number(parts[1]) : 1;
+    return frac(num, den);
+}

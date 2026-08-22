@@ -35,8 +35,8 @@ describe("bass / lead", () => {
 
     it("est immuable", () => {
         const base = bass("acid").notes("C2");
-        base.rhythm("x-x-"); // renvoie un nouveau builder, `base` inchangé
-        expect(base.length).toEqual(frac(1, 4)); // notes "C2" + rythme défaut "x" = 1 pas
+        base.rhythm("x-x-");
+        expect(base.length).toEqual(frac(1, 4));
     });
 
     it("s'utilise directement dans section()", () => {
