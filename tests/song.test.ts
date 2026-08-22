@@ -51,4 +51,16 @@ describe("song / arrange", () => {
         ]);
         expect(score.instruments).toEqual({ acid: {}, "909": {} });
     });
+
+    it(".repeat(n) répète une section dans le temps", () => {
+        const a = section([track("x", { rhythm: "x" })]); // length 1/4
+        const b = section([track("y", { rhythm: "x" })]); // length 1/4
+
+        const score = song({ bpm: 120 })
+            .arrange([a, b.repeat(2)])
+            .export();
+
+        expect(score.duration).toBe("3/4"); // a + b + b
+        expect(score.events.map((e) => e.instrument)).toEqual(["x", "y", "y"]);
+    });
 });

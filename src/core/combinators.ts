@@ -21,6 +21,10 @@ export function pure<T>(value: T, dur: Fraction = frac(1)): Pattern<T> {
     };
 }
 
+export function silence<T>(length: Fraction): Pattern<T> {
+    return { length, query: () => [] };
+}
+
 export function stack<T>(...patterns: Pattern<T>[]): Pattern<T> {
     let length = frac(0);
     for (const p of patterns) {

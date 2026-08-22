@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { section } from "../src/music/section";
+import { at, section } from "../src/music/section";
+import { song } from "../src/music/song";
 import { track } from "../src/music/track";
 import { frac } from "../src/time/fraction";
 
@@ -21,5 +22,24 @@ describe("section", () => {
         const long = track("909", { rhythm: "x-x--x--" }); // length 2
         const short = track("acid", { notes: "C2", rhythm: "x" }); // length 1/4
         expect(section([long, short]).length).toEqual(frac(2)); // le long est en 1er
+    });
+
+    it(".with ajoute des tracks sans modifier la section d'origine", () => {
+        const base = section([track("a", { rhythm: "x" })], "verse");
+        const extended = base.with([track("b", { rhythm: "x" })]);
+
+        expect(base.tracks).toHaveLength(1); // base intact (immuable)
+        expect(extended.tracks).toHaveLength(2);
+        expect(extended.name).toBe("verse"); // le nom est conservé
+    });
+
+    it("at() pose un élément à un offset temporel", () => {
+        const crash = track("crash", { rhythm: "x" }); // length 1/4
+        const score = song({ bpm: 120 })
+            .arrange([section([at(frac(1), crash)])])
+            .export();
+
+        expect(score.events).toEqual([{ start: "1/1", dur: "1/4", instrument: "crash" }]);
+        expect(score.duration).toBe("5/4"); // offset 1 + durée 1/4
     });
 });

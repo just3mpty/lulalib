@@ -8,7 +8,7 @@ export type Song = {
     readonly key?: string;
     readonly timeSignature?: [number, number];
     readonly arrangement: Section[];
-    arrange(sections: Section[]): Song;
+    arrange(sections: (Section | Section[])[]): Song;
     export(): Score;
 };
 
@@ -22,8 +22,8 @@ type SongState = {
 function build(state: SongState): Song {
     return {
         ...state,
-        arrange(sections: Section[]): Song {
-            return build({ ...state, arrangement: sections });
+        arrange(sections: (Section | Section[])[]): Song {
+            return build({ ...state, arrangement: sections.flat() });
         },
         export(): Score {
             const ctx: BuildContext = state.key === undefined ? {} : { key: parseKey(state.key) };
