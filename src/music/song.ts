@@ -1,6 +1,7 @@
 import { cat, stack } from "../core/combinators";
 import { type Score, scoreFromPattern } from "../render/score";
-import type { Section } from "./section";
+import { parseKey } from "../theory/scale";
+import { type BuildContext, type Section, toTrack } from "./section";
 
 export type Song = {
     readonly bpm: number;
@@ -25,8 +26,10 @@ function build(state: SongState): Song {
             return build({ ...state, arrangement: sections });
         },
         export(): Score {
+            const ctx: BuildContext = state.key === undefined ? {} : { key: parseKey(state.key) };
+
             const sectionPatterns = state.arrangement.map((sec) =>
-                stack(...sec.tracks.map((t) => t.pattern)),
+                stack(...sec.tracks.map((item) => toTrack(item, ctx).pattern)),
             );
             const songPattern = cat(...sectionPatterns);
 

@@ -1,10 +1,28 @@
 import { describe, expect, it } from "vitest";
 import { section } from "../src/music/section";
 import { song } from "../src/music/song";
+import { bass } from "../src/music/sugar";
 import { track } from "../src/music/track";
 
 const verse = section([track("acid", { notes: "C2", rhythm: "x" })]);
 const chorus = section([track("909", { rhythm: "x-x-" })]);
+
+describe("song + degrés", () => {
+    it("résout les degrés contre la key du morceau", () => {
+        const verse = section([bass("acid").notes("1 3 5").rhythm("x-x-x-")]);
+
+        const cm = song({ bpm: 120, key: "Cm" }).arrange([verse]).export();
+        expect(cm.events.map((e) => e.note)).toEqual(["C4", "Eb4", "G4"]);
+
+        const c = song({ bpm: 120, key: "C" }).arrange([verse]).export();
+        expect(c.events.map((e) => e.note)).toEqual(["C4", "E4", "G4"]);
+    });
+
+    it("lève si des degrés sont utilisés sans key", () => {
+        const verse = section([bass("acid").notes("1 3 5")]);
+        expect(() => song({ bpm: 120 }).arrange([verse]).export()).toThrow();
+    });
+});
 
 describe("song / arrange", () => {
     it("arrange stocke les sections et garde les métadonnées", () => {
