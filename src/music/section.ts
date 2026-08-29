@@ -5,7 +5,9 @@ import type { Track } from "./track";
 
 export type BuildContext = { key?: Key; baseOctave?: number };
 
-export type Buildable = Track | { length: Fraction; build(ctx?: BuildContext): Track };
+export type Buildable =
+    | Track
+    | { length: Fraction; build(ctx?: BuildContext): Track };
 
 export type Section = {
     name?: string;
@@ -28,7 +30,10 @@ export function at(offset: Fraction, item: Buildable): Buildable {
         length: add(offset, itemLength(item)),
         build: (ctx) => {
             const trk = toTrack(item, ctx);
-            return { instrument: trk.instrument, pattern: cat(silence(offset), trk.pattern) };
+            return {
+                instrument: trk.instrument,
+                pattern: cat(silence(offset), trk.pattern),
+            };
         },
     };
 }

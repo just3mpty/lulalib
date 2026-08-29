@@ -12,6 +12,17 @@
         "pattern",
         "score"
     ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/just3mpty/uzume.git"
+    },
+    "bugs": {
+        "url": "https://github.com/just3mpty/uzume/issues"
+    },
+    "homepage": "https://github.com/just3mpty/uzume#readme",
+    "engines": {
+        "node": ">=18"
+    },
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
     "types": "./dist/index.d.ts",
