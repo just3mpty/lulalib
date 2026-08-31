@@ -1,6 +1,6 @@
 {
     "name": "lulalib",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "description": "A declarative music composition DSL for JavaScript/TypeScript. Compiles to a serializable Score, no audio engine.",
     "type": "module",
     "license": "MIT",
