@@ -1,5 +1,5 @@
 {
-    "name": "uzume",
+    "name": "lulalib",
     "version": "0.0.0",
     "description": "A declarative music composition DSL for JavaScript/TypeScript. Compiles to a serializable Score, no audio engine.",
     "type": "module",
@@ -14,12 +14,12 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/just3mpty/uzume.git"
+        "url": "git+https://github.com/just3mpty/lulalib.git"
     },
     "bugs": {
-        "url": "https://github.com/just3mpty/uzume/issues"
+        "url": "https://github.com/just3mpty/lulalib/issues"
     },
-    "homepage": "https://github.com/just3mpty/uzume#readme",
+    "homepage": "https://github.com/just3mpty/lulalib#readme",
     "engines": {
         "node": ">=18"
     },

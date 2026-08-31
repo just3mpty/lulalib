@@ -1,10 +1,10 @@
-# Uzume, guide for agents
+# Lulalib, guide for agents
 
-This document teaches an agent (LLM, coding assistant) to **compose music with `uzume`** and write correct code on the first try. It covers what the library does, the exact API, and the pitfalls to avoid.
+This document teaches an agent (LLM, coding assistant) to **compose music with `lulalib`** and write correct code on the first try. It covers what the library does, the exact API, and the pitfalls to avoid.
 
-## What uzume does (and does not)
+## What lulalib does (and does not)
 
-Uzume is a declarative DSL: you describe *what* to play, *when*, and *with which instrument*, and the library compiles that into a **Score**, a flat object serializable to JSON.
+Lulalib is a declarative DSL: you describe *what* to play, *when*, and *with which instrument*, and the library compiles that into a **Score**, a flat object serializable to JSON.
 
 - It produces a Score, exportable to JSON or MIDI.
 - It generates **no audio** and schedules nothing in real time. To hear a Score, export it to MIDI (open in a DAW) or hand it to an external player. Never expect the library itself to "play" a sound.
@@ -14,11 +14,11 @@ The core has **zero runtime dependencies** and uses neither the DOM nor Node: it
 ## Installation
 
 ```bash
-npm install uzume     # or: pnpm add uzume
+npm install lulalib     # or: pnpm add lulalib
 ```
 
 ```ts
-import { song, section, bass, lead, drums, toJSON, toMIDI } from "uzume";
+import { song, section, bass, lead, drums, toJSON, toMIDI } from "lulalib";
 ```
 
 ## Mental model: two axes
@@ -109,7 +109,7 @@ song({ bpm: 128, key: "Cm" }).arrange([intro, verse.repeat(2), chorus]).export()
 Shifts an element in time: `at(offset: Fraction, item) -> Buildable`. The offset is a fraction, built with `frac` (exported).
 
 ```ts
-import { at, frac } from "uzume";
+import { at, frac } from "lulalib";
 section([at(frac(3), drums("909").part("crash", "x"))]); // crash on the 3rd beat
 ```
 

@@ -1,0 +1,26 @@
+# CODEOWNERS pour lulalib
+
+- @just3mpty
+
+# La CI / GitHub Actions
+
+.github/workflows/ @just3mpty
+
+# Config de build / TS / lint
+
+tsup.config.ts @just3mpty
+tsconfig\*.json @just3mpty
+biome.json @just3mpty
+package.json @just3mpty
+pnpm-lock.yaml @just3mpty
+
+# Tests
+
+**tests**/ @just3mpty
+\*.test.ts @just3mpty
+
+# Documentation
+
+README.md @just3mpty
+CONTRIBUTING.md @just3mpty
+SECURITY.md @just3mpty

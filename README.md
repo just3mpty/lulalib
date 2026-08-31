@@ -1,6 +1,6 @@
-# Uzume
+# Lulalib
 
-> Composez de la musique en écrivant du code. Uzume est un DSL déclaratif de composition musicale pour JavaScript/TypeScript qui compile vers un **Score sérialisable**. Pas de moteur audiomais simplement une description exacte de ce qu'il faut jouer, quand, et avec quel instrument.
+> Composez de la musique en écrivant du code. Lulalib est un DSL déclaratif de composition musicale pour JavaScript/TypeScript qui compile vers un **Score sérialisable**. Pas de moteur audiomais simplement une description exacte de ce qu'il faut jouer, quand, et avec quel instrument.
 
 ```ts
 lead("saw").notes("C4 E4 G4");
@@ -16,14 +16,14 @@ lead("saw").notes("C4 E4 G4");
 ## Installation
 
 ```bash
-npm install uzume
-# ou : pnpm add uzume
+npm install lulalib
+# ou : pnpm add lulalib
 ```
 
 ## Démarrage rapide
 
 ```ts
-import { song, section, bass, drums, toJSON, toMIDI } from "uzume";
+import { song, section, bass, drums, toJSON, toMIDI } from "lulalib";
 
 const verse = section([
   drums("909").kick("x-x-").snare("--o-").hihat("xxxxxxxx"),
@@ -127,7 +127,7 @@ Le Score est l'intermédiaire canonique. Les exporters sont de simples fonctions
 
 ## Jouer le son
 
-Uzume ne génère jamais d'audio. Pour *entendre* un Score, vous exportez en MIDI et l'ouvrez dans un DAW, ou vous confiez le Score à un player externe qui lit `(Score, sampleMap)`.
+Lulalib ne génère jamais d'audio. Pour *entendre* un Score, vous exportez en MIDI et l'ouvrez dans un DAW, ou vous confiez le Score à un player externe qui lit `(Score, sampleMap)`.
 
 ## Statut
 
